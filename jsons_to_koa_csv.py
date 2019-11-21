@@ -50,6 +50,8 @@ def get_header():
     s = ''
     for t in header:
         s += t + ','
+    s += '\n'
+
     return s
 
 def quote(word):
@@ -67,39 +69,31 @@ def get_one_line_csv(dct):
 
     s = ''
     s += ','                                    # シリアル番号
-    s += quote(get(root,'created_at')) + ','           # 日付時刻
-    s += quote(str(dt_jp.year)) + ','                     # 年
-    s += quote(str(dt_jp.month)) + ','                    # 月
-    s += quote(str(dt_jp.day)) + ','                      # 日
-    s += quote(dt_jp.strftime('%H:%M:%S')) + ','        # 時間
-    s += quote(get(user,'screen_name')) + ','          # Twitterスクリーンネーム
+    s += quote(created_at) + ','                # 日付時刻
+    s += quote(str(dt_jp.year)) + ','           # 年
+    s += quote(str(dt_jp.month)) + ','          # 月
+    s += quote(str(dt_jp.day)) + ','            # 日
+    s += quote(dt_jp.strftime('%H:%M:%S')) + ','    # 時間
+    s += quote(get(user,'screen_name')) + ','   # Twitterスクリーンネーム
     s += ','                                    # ★TwitterURL
-    s += quote(get(root,'id_str')) + '",'        # TwitterID, user.id_strと間違えていたのを修正(v0.5)
+    s += quote(get(root,'id_str')) + ','        # TwitteID
     s += ','                                    # listID
     s += ','                                    # 俗称･通称
 
     # Tweet (長い場合のみ、extended_tweetがあるようだ)
     if ( root['truncated'] == True ):
         extended_tweet = root['extended_tweet']
-        #オリジナル
-        #s += '"' + get(extended_tweet,'full_text') + '",'
-        s += quote(get(extended_tweet,'full_text').replace('"','""')) + '",' 
+        s += quote(get(extended_tweet,'full_text').replace('"','""')) + ',' 
     else:
-        #オリジナル
-        #s += '"' + get(root,'text') + '",'
-        # 改行を空白に置き換える場合
-        #s += get(root,'text').replace('\n',' ') + ','
-        # csv用にカンマの置き換えが必要、全角カンマにしておく
-        #s += '"' + get(root,'text').replace(',','，') + '",'
-        # csv needs to escape double quote with 2 of them
-        s += '"' + get(root,'text').replace('"','""') + '",'
+        s += quote(get(root,'text')) + ','
 
     # メンション
     user_mentions = entities['user_mentions']
+    t = ''
     if user_mentions:
         for mention in user_mentions:
-            s += '@' + get(mention,'screen_name') + ' '
-    s += ','
+            t += '@' + get(mention,'screen_name') + ' '
+    s += quote(t) + ','
 
     # 画像URL1-4
     # 2枚目以降は、extended_entitiesにしかない
@@ -111,10 +105,10 @@ def get_one_line_csv(dct):
 
     if 'media' in entities_2:
         media = entities_2['media']
-        s += get_elem_in_array(media,0,'media_url') + ','
-        s += get_elem_in_array(media,1,'media_url') + ','
-        s += get_elem_in_array(media,2,'media_url') + ','
-        s += get_elem_in_array(media,3,'media_url') + ','
+        s += quote(get_elem_in_array(media,0,'media_url')) + ','
+        s += quote(get_elem_in_array(media,1,'media_url')) + ','
+        s += quote(get_elem_in_array(media,2,'media_url')) + ','
+        s += quote(get_elem_in_array(media,3,'media_url')) + ','
     else:
         s += ',,,,'
 
@@ -130,8 +124,8 @@ def get_one_line_csv(dct):
     s += ','
     s += ','
 
-    s += str(get(root,'retweet_count')) + ','       # RT数
-    s += str(get(root,'favorite_count')) + ','      # イイネ数
+    s += quote(str(get(root,'retweet_count'))) + ','    # RT数
+    s += quote(str(get(root,'favorite_count'))) + ','   # イイネ数
     s += ','                                        # 備考
     s += ','                                        # 管理用情報
     s += '\n'
