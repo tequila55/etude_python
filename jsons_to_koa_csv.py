@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 import sys
 import datetime
@@ -12,7 +14,7 @@ def get_elem_in_array(ary,index,key):
     else:
         return ''
 
-def print_header():
+def get_header():
     header = (
         'シリアル番号',
         '日付時刻',
@@ -48,9 +50,12 @@ def print_header():
     s = ''
     for t in header:
         s += t + ','
-    print(s)
+    return s
 
-def print_one_line_csv(dct):
+def quote(word):
+    return '"' + word.replace('"','""') +'"'
+
+def get_one_line_csv(dct):
 
     root = dct
     user = root['user']
@@ -62,14 +67,14 @@ def print_one_line_csv(dct):
 
     s = ''
     s += ','                                    # シリアル番号
-    s += get(root,'created_at') + ','           # 日付時刻
-    s += str(dt_jp.year) + ','                     # 年
-    s += str(dt_jp.month) + ','                    # 月
-    s += str(dt_jp.day) + ','                      # 日
-    s += dt_jp.strftime('"%H:%M:%S"') + ','        # 時間
-    s += get(user,'screen_name') + ','          # Twitterスクリーンネーム
+    s += quote(get(root,'created_at')) + ','           # 日付時刻
+    s += quote(str(dt_jp.year)) + ','                     # 年
+    s += quote(str(dt_jp.month)) + ','                    # 月
+    s += quote(str(dt_jp.day)) + ','                      # 日
+    s += quote(dt_jp.strftime('%H:%M:%S')) + ','        # 時間
+    s += quote(get(user,'screen_name')) + ','          # Twitterスクリーンネーム
     s += ','                                    # ★TwitterURL
-    s += '"' + get(root,'id_str') + '",'        # TwitterID, user.id_strと間違えていたのを修正(v0.5)
+    s += quote(get(root,'id_str')) + '",'        # TwitterID, user.id_strと間違えていたのを修正(v0.5)
     s += ','                                    # listID
     s += ','                                    # 俗称･通称
 
@@ -78,17 +83,16 @@ def print_one_line_csv(dct):
         extended_tweet = root['extended_tweet']
         #オリジナル
         #s += '"' + get(extended_tweet,'full_text') + '",'
-        # 改行を空白に置き換える場合
-        #s += get(extended_tweet,'full_text').replace('\n',' ') + ','
-        # csv用にカンマの置き換えが必要、全角カンマにしておく
-        s += '"' + get(extended_tweet,'full_text').replace(',','，') + '",' 
+        s += quote(get(extended_tweet,'full_text').replace('"','""')) + '",' 
     else:
         #オリジナル
         #s += '"' + get(root,'text') + '",'
         # 改行を空白に置き換える場合
         #s += get(root,'text').replace('\n',' ') + ','
         # csv用にカンマの置き換えが必要、全角カンマにしておく
-        s += '"' + get(root,'text').replace(',','，') + '",'
+        #s += '"' + get(root,'text').replace(',','，') + '",'
+        # csv needs to escape double quote with 2 of them
+        s += '"' + get(root,'text').replace('"','""') + '",'
 
     # メンション
     user_mentions = entities['user_mentions']
@@ -130,20 +134,25 @@ def print_one_line_csv(dct):
     s += str(get(root,'favorite_count')) + ','      # イイネ数
     s += ','                                        # 備考
     s += ','                                        # 管理用情報
+    s += '\n'
 
-    print(s)
+    return s 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('ERROR: Input file required.')
+    if len(sys.argv) != 3:
+        print('ERROR: Input file and output file are required.')
         print('       Input file must consist of one json per line.')
         exit()
 
-    with open(sys.argv[1],'r') as fin:
-        print_header()
-        for line in fin:
+    in_file = sys.argv[1]
+    out_file = sys.argv[2]
+
+    with open(in_file,'r') as f_in, open(out_file,'w') as f_out:
+        f_out.write(get_header())
+        for line in f_in:
             try:
                 data = json.loads(line)
             except json.JSONDecodeError as e:
                 continue
-            print_one_line_csv(data)
+            f_out.write(get_one_line_csv(data))
+
