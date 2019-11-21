@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
 import pandas
 import json
@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
     df = pandas.DataFrame()
 
-    with open(sys.argv[1],'r') as fin:
+    with open(sys.argv[1],'r', encoding="utf-8") as fin:
         for line in fin:
             try:
                 data = json.loads(line)
@@ -24,4 +24,4 @@ if __name__ == '__main__':
             #json.dump(data, sys.stdout, ensure_ascii=False, indent=4)
             #print()
 
-    df.to_csv(sys.argv[2])
+    df.to_csv(sys.argv[2], encoding="utf_8_sig")

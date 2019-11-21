@@ -141,7 +141,7 @@ if __name__ == '__main__':
     in_file = sys.argv[1]
     out_file = sys.argv[2]
 
-    with open(in_file,'r') as f_in, open(out_file,'w') as f_out:
+    with open(in_file,'r', encoding="utf-8") as f_in, open(out_file,'w', encoding="utf_8_sig") as f_out:
         f_out.write(get_header())
         for line in f_in:
             try:
