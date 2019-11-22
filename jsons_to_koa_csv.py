@@ -5,15 +5,6 @@ import sys
 import datetime
 from pytz import timezone
 
-def get(dct,key):
-    return dct.get(key,'N/A')
-
-def get_elem_in_array(ary,index,key):
-    if len(ary) > index:
-        return get(ary[index],key)
-    else:
-        return ''
-
 def get_header():
     header = (
         'シリアル番号',
@@ -53,6 +44,15 @@ def get_header():
     s += '\n'
 
     return s
+
+def get(dct,key):
+    return dct.get(key,'N/A')
+
+def get_elem_in_array(ary,index,key):
+    if len(ary) > index:
+        return get(ary[index],key)
+    else:
+        return ''
 
 def quote(word):
     return '"' + word.replace('"','""') +'"'
@@ -103,6 +103,7 @@ def get_one_line_csv(dct):
     else:
         entities_2 = entities
 
+    media = []
     if 'media' in entities_2:
         media = entities_2['media']
         s += quote(get_elem_in_array(media,0,'media_url')) + ','

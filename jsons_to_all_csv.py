@@ -41,6 +41,6 @@ if __name__ == '__main__':
                         data = json.loads(line)
                     except json.JSONDecodeError as e:
                         continue
-                    json.dump(data,fout,ensure_ascii=False,indent=2)
+                    json.dump(data,fout,ensure_ascii=False,indent=4)
                     fout.write('\n' + '='*60 +'\n')
 
