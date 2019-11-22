@@ -134,8 +134,10 @@ def get_one_line_csv(dct):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print('ERROR: Input file and output file are required.')
-        print('       Input file must consist of one json per line.')
+        print('ERROR: Input file and output file required.')
+        print('USAGE: ' + sys.argv[0] + ' <in_file> <out_file>')
+        print('       in_file:  it must be one json per line.')
+        print('       out_file: .csv')
         exit()
 
     in_file = sys.argv[1]
