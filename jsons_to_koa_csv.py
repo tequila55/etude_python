@@ -33,10 +33,10 @@ def get_header():
         '画像URL2',
         '画像URL3',
         '画像URL4',
-        '★引用URL1',
-        '★引用URL2',
-        '★引用URL3',
-        '★引用URL4',
+        '引用URL1',
+        '引用URL2',
+        '引用URL3',
+        '引用URL4',
         '★引用画像URL1',
         '★引用画像URL2',
         '★引用画像URL3',
@@ -83,7 +83,7 @@ def get_one_line_csv(dct):
     # Tweet (長い場合のみ、extended_tweetがあるようだ)
     if ( root['truncated'] == True ):
         extended_tweet = root['extended_tweet']
-        s += quote(get(extended_tweet,'full_text').replace('"','""')) + ',' 
+        s += quote(get(extended_tweet,'full_text')) + ',' 
     else:
         s += quote(get(root,'text')) + ','
 
@@ -112,11 +112,15 @@ def get_one_line_csv(dct):
     else:
         s += ',,,,'
 
-    # ★引用URL1-4
-    s += ','
-    s += ','
-    s += ','
-    s += ','
+    # 引用URL1-4
+    if 'urls' in entities:
+        urls = entities['urls']
+        s += quote(get_elem_in_array(urls,0,'expanded_url')) + ','
+        s += quote(get_elem_in_array(urls,1,'expanded_url')) + ','
+        s += quote(get_elem_in_array(urls,2,'expanded_url')) + ','
+        s += quote(get_elem_in_array(urls,3,'expanded_url')) + ','
+    else:
+        s += ',,,,'
 
     # ★引用画像URL1-4
     s += ','
