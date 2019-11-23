@@ -14,7 +14,7 @@ def get_header():
         '日',
         '時間',
         'Twitterスクリーンネーム',
-        '★TwitterURL',
+        'TwitterURL',
         'TwitterID',
         'listID',
         '俗称･通称',
@@ -28,10 +28,10 @@ def get_header():
         '引用URL2',
         '引用URL3',
         '引用URL4',
-        '★引用画像URL1',
-        '★引用画像URL2',
-        '★引用画像URL3',
-        '★引用画像URL4',	
+        '引用画像URL1',
+        '引用画像URL2',
+        '引用画像URL3',
+        '引用画像URL4',	
         'RT数',
         'イイネ数',
         '備考',
@@ -68,17 +68,17 @@ def get_one_line_csv(dct):
     dt_jp = dt.astimezone(timezone('Asia/Tokyo'))
 
     s = ''
-    s += ','                                    # シリアル番号
+    s += ','                                    # シリアル番号(空欄)
     s += quote(created_at) + ','                # 日付時刻
     s += quote(str(dt_jp.year)) + ','           # 年
     s += quote(str(dt_jp.month)) + ','          # 月
     s += quote(str(dt_jp.day)) + ','            # 日
     s += quote(dt_jp.strftime('%H:%M:%S')) + ','    # 時間
     s += quote(get(user,'screen_name')) + ','   # Twitterスクリーンネーム
-    s += ','                                    # ★TwitterURL
+    s += ','                                    # TwitterURL(空欄)
     s += quote(get(root,'id_str')) + ','        # TwitteID
-    s += ','                                    # listID
-    s += ','                                    # 俗称･通称
+    s += ','                                    # listID(空欄)
+    s += ','                                    # 俗称･通称(空欄)
 
     # Tweet (長い場合のみ、extended_tweetがあるようだ)
     if ( root['truncated'] == True ):
@@ -123,7 +123,7 @@ def get_one_line_csv(dct):
     else:
         s += ',,,,'
 
-    # ★引用画像URL1-4
+    # 引用画像URL1-4(とりあえず空欄)
     s += ','
     s += ','
     s += ','
@@ -131,8 +131,8 @@ def get_one_line_csv(dct):
 
     s += quote(str(get(root,'retweet_count'))) + ','    # RT数
     s += quote(str(get(root,'favorite_count'))) + ','   # イイネ数
-    s += ','                                        # 備考
-    s += ','                                        # 管理用情報
+    s += ','                                        # 備考(空欄)
+    s += ','                                        # 管理用情報(空欄)
     s += '\n'
 
     return s 

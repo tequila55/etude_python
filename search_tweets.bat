@@ -1,21 +1,28 @@
-ï»¿@echo off
+@echo off
 
+rem ŒŸõ•¶Žš—ñid—v‚ÈÝ’è€–Ú‚Å‚·j
 rem set FILTER="(from:227228567 OR to:227228567) (from:631124865 OR to:631124865)"
 rem set FILTER="from:227228567 to:631124865"
 rem set FILTER="from:227228567 "
 set FILTER="gamayauber01 from:227228567"
 
+rem ŒŸõŠúŠÔ‚ÆŒŸõãŒÀid—v‚ÈÝ’è€–Ú‚Å‚·j
 set FROM_DATE=2008-01-01T00:00
 set TO_DATE=2019-11-20T00:00
+set MAX_RESULTS=1000
+
+rem ‚±‚±‚©‚çæ‚ÍAŠî–{“I‚É•ÏX•s—v‚Ì‚Í‚¸‚Å‚·
+rem ƒƒ‚F‚±‚Ìƒtƒ@ƒCƒ‹‚ÍShift JIS‚Å•Û‘¶‚µ‚Ä‚ ‚è‚Ü‚·
 
 for /f "usebackq" %%A in (`where search_tweets.py`) do set SEARCH_TWEETS=%%A
 set KEY_FILE=my_keys.yaml
-set PARAM=--max-results 1000 --results-per-call 100 --start-datetime %FROM_DATE% --end-datetime %TO_DATE% --print-stream
+set PARAM=--max-results %MAX_RESULTS% --results-per-call 100 --start-datetime %FROM_DATE% --end-datetime %TO_DATE% --print-stream
 set COMMAND=python %SEARCH_TWEETS%  --credential-file %KEY_FILE% %PARAM% --filter-rule %FILTER%
 
-echo ä»¥ä¸‹ã®ã‚³ãƒžãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ãŒã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ
+echo ˆÈ‰º‚ÌƒRƒ}ƒ“ƒh‚ðŽÀs‚µ‚Ü‚·‚ª‚æ‚ë‚µ‚¢‚Å‚·‚©H
 echo %COMMAND%
+echo .
 pause
 echo %COMMAND% >> search_command.txt
-%COMMAND% >> search_result.txt
+%COMMAND% >> search_history.txt
 pause
