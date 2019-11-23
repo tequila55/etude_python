@@ -4,7 +4,12 @@
 2) Twitterアプリ作成(名称は適当でよいが、独自のものが必要）
 3) Twitter環境作成(名称はdevにしておく）
 4) my_keys.yaml に key 二つを書き込む(メモ帳で開く)
-5) python環境のインストール(PATHに追加するをチェックする)
+5) python環境のインストール
+　　https://www.python.org/downloads/
+　　から
+　　python-3.7.5-amd64.exe
+　　をダウンロードして実行
+　　PATHに追加するをチェックする
 6) 0_setup.batの実行
 
 ここまでは準備なので、一回やればOKです。
