@@ -1,13 +1,13 @@
 @echo off
 rem メモ：このファイルはShift JISで保存してあります
 
-rem 検索文字列（重要な設定項目です）
+rem 検索文字列（重要な設定項目です。remで始まる行は使われません。参考用です。）
 rem set FILTER="(from:227228567 OR to:227228567) (from:631124865 OR to:631124865)"
 rem set FILTER="from:227228567 to:631124865"
-rem set FILTER="from:227228567 "
+rem set FILTER="from:227228567"
 set FILTER="gamayauber01 from:227228567"
 
-rem 検索期間と検索上限（重要な設定項目です）
+rem 検索期間と検索結果の上限（重要な設定項目です）
 set FROM_DATE=2008-01-01T00:00
 set TO_DATE=2019-11-20T00:00
 set MAX_RESULTS=5
