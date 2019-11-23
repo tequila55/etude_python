@@ -1,4 +1,5 @@
 @echo off
+rem メモ：このファイルはShift JISで保存してあります
 
 rem 検索文字列（重要な設定項目です）
 rem set FILTER="(from:227228567 OR to:227228567) (from:631124865 OR to:631124865)"
@@ -12,7 +13,6 @@ set TO_DATE=2019-11-20T00:00
 set MAX_RESULTS=1000
 
 rem ここから先は、基本的に変更不要のはずです
-rem メモ：このファイルはShift JISで保存してあります
 
 for /f "usebackq" %%A in (`where search_tweets.py`) do set SEARCH_TWEETS=%%A
 set KEY_FILE=my_keys.yaml
