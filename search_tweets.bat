@@ -1,4 +1,4 @@
-@echo off
+ï»¿@echo off
 
 rem set FILTER="(from:227228567 OR to:227228567) (from:631124865 OR to:631124865)"
 rem set FILTER="from:227228567 to:631124865"
@@ -13,7 +13,7 @@ set KEY_FILE=my_keys.yaml
 set PARAM=--max-results 1000 --results-per-call 100 --start-datetime %FROM_DATE% --end-datetime %TO_DATE% --print-stream
 set COMMAND=python %SEARCH_TWEETS%  --credential-file %KEY_FILE% %PARAM% --filter-rule %FILTER%
 
-echo ˆÈ‰º‚ÌƒRƒ}ƒ“ƒh‚ðŽÀs‚µ‚Ü‚·‚ª‚æ‚ë‚µ‚¢‚Å‚·‚©H
+echo ä»¥ä¸‹ã®ã‚³ãƒžãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ãŒã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ
 echo %COMMAND%
 pause
 echo %COMMAND% >> search_command.txt
