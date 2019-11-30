@@ -10,19 +10,26 @@ from urllib import request
 folder='apeman'
 name='*.html'
 
+def analyze(html):
+    soup = bs(html, 'lxml')
+    a = soup.find_all(class_='centerarticle-entry-title')
+    for t in a:
+        print(t.text)
+        print('-'*30)
+        b = t.find(class_='centerarticle-entry-summary')
+        if(b):
+            print(b.text)
+        print('='*30)
+
 def scraping():
     p=Path(folder)
     for f in p.glob(name):
         print(f)
         with open(f,'r',encoding='utf_8_sig') as fin:
             html=fin.read()
-            soup = bs(html, 'lxml')
-            a = soup.find_all(class_='centerarticle-entry-title')
-            for t in a:
-                print(t.text)
-                print('='*30)
-            #b = a.find_all('span', class_='headline')
-
+            analyze(html)
+            # for test uncomment this return
+            return
     
     '''
     #get headlines
