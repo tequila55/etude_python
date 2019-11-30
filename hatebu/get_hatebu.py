@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 from time import sleep
 
-prefix='test/apeman_'
+prefix='test2/apeman_'
 suffix='.html'
 
 user = 'Apeman'
@@ -20,6 +20,8 @@ while True:
     out_file = prefix + str(page).zfill(5) + suffix
     with open (out_file,'w',encoding='utf_8_sig') as fout:
         fout.write(r.text)
+    
+    print(page)
 
     # 「次のページ」がなくなると最終ページということを使用
     if soup.find_all(class_="centerarticle-pager-next"):
@@ -27,5 +29,5 @@ while True:
         r = requests.get(url + '?page=' + str(page))
     else:
         break
-    sleep(3)
+    sleep(1)
 
