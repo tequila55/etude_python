@@ -1,28 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from pathlib import Path
 import pandas
 import json
 import sys
 from bs4 import BeautifulSoup as bs
 from urllib import request
 
-folder='apeman'
-name='*.html'
-
 def scraping():
-    p=Path(folder)
-    for f in p.glob(name):
-        print(f)
-        with open(f,'r',encoding='utf_8_sig') as fin:
-            html=fin.read()
-            soup = bs(html, 'lxml')
-            a = soup.find_all(class_='centerarticle-entry-title')
-            for t in a:
-                print(t.text)
-                print('='*30)
-            #b = a.find_all('span', class_='headline')
+    #url
+    #url = "http://www.yomiuri.co.jp/"
+    url = "https://b.hatena.ne.jp/Apeman/"
+    #url = "https://b.hatena.ne.jp/apesnotmonkeys/"
 
+    #get html
+    html = request.urlopen(url)
+
+    print(vars(html))
+
+    #set BueatifulSoup
+    soup = bs(html, "html.parser")
+
+    #print(soup) 
     
     '''
     #get headlines
