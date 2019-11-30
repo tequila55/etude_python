@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import requests
 from time import sleep
 
+prefix='test/apeman_'
+suffix='.html'
+
 user = 'Apeman'
 url = 'http://b.hatena.ne.jp/' + user + '/bookmark'
 
@@ -12,9 +15,11 @@ page = 1
 
 while True:
     soup = BeautifulSoup(r.text, 'html.parser')
-    print(soup)
+    #print(soup)
 
-    #　ブックマークを取得するコードを書く
+    out_file = prefix + str(page).zfill(5) + suffix
+    with open (out_file,'w',encoding='utf_8_sig') as fout:
+        fout.write(r.text)
 
     # 「次のページ」がなくなると最終ページということを使用
     if soup.find_all(class_="centerarticle-pager-next"):
@@ -22,5 +27,5 @@ while True:
         r = requests.get(url + '?page=' + str(page))
     else:
         break
-    sleep(10)
+    sleep(3)
 
