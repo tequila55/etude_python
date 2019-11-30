@@ -15,11 +15,13 @@ def analyze(html):
     a = soup.find_all(class_='centerarticle-entry-title')
     for t in a:
         print(t.text)
+        '''
         print('-'*30)
         b = t.find(class_='centerarticle-entry-summary')
         if(b):
             print(b.text)
         print('='*30)
+        '''
 
 def scraping():
     p=Path(folder)
@@ -29,7 +31,7 @@ def scraping():
             html=fin.read()
             analyze(html)
             # for test uncomment this return
-            return
+            #return
     
     '''
     #get headlines
