@@ -13,7 +13,8 @@ page = 1
 
 while True:
     r = requests.get(url + '?page=' + str(page))
-    soup = BeautifulSoup(r.text, 'html.parser')
+    #soup = BeautifulSoup(r.text, 'html.parser')
+    soup = BeautifulSoup(r.text, 'lxml')
     #print(soup)
 
     out_file = prefix + str(page).zfill(5) + suffix
