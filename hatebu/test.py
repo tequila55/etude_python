@@ -7,7 +7,7 @@ import sys
 from bs4 import BeautifulSoup as bs
 from urllib import request
 
-folder='apeman'
+folder='monkey'
 name='*.html'
 
 def analyze(html):
@@ -26,7 +26,7 @@ def analyze(html):
 def scraping():
     p=Path(folder)
     for f in p.glob(name):
-        print(f)
+        #print(f)
         with open(f,'r',encoding='utf_8_sig') as fin:
             html=fin.read()
             analyze(html)
